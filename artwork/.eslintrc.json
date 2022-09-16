@@ -1,0 +1,43 @@
+{
+    "env": {
+        "browser": true,
+        "es2021": true
+    },
+    "extends": [
+        "plugin:@typescript-eslint/recommended-requiring-type-checking",
+        "plugin:react/recommended",
+        "standard-with-typescript",
+        "react-app",
+        "prettier"
+    ],
+    "overrides": [
+    ],
+    "parserOptions": {
+        "project": ["tsconfig.json"],
+        "ecmaFeatures": {
+			"jsx": true
+            // "tsx": true
+		},
+        "ecmaVersion": "latest",
+        "sourceType": "module"
+    },
+    "plugins": [
+        "react",
+        "prettier",
+        "@typescript-eslint"
+    ],
+    "rules": {
+        "prettier/prettier": [
+			"error", {
+				"printWidt": 80,
+				"trailingComma": "es5",
+				"semi": true,
+				"jsxSingleQuote": true,
+				"singleQuote": true,
+				"useTab": true,
+				"endOfLine": "auto",
+				"max-len": ["error", {"code": 80}]
+			}
+		]
+    }
+}
