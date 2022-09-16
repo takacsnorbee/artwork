@@ -1,5 +1,5 @@
-import './Details.css';
 import React, { FC } from 'react';
+import './ArtworkTile.css';
 import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
@@ -8,7 +8,7 @@ import Card from '@mui/material/Card';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 
-const Details: FC = () => {
+const ArtworkTile: FC = () => {
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardActionArea>
@@ -19,15 +19,8 @@ const Details: FC = () => {
           alt='green iguana'
         />
         <CardContent>
-          <Typography sx={{ fontSize: 14 }} color='text.secondary' gutterBottom>
-            Word of the Day
-          </Typography>
           <Typography gutterBottom variant='h5' component='div'>
             Lizard
-          </Typography>
-          <Typography variant='body2' color='text.secondary'>
-            Lizards are a widespread group of squamate reptiles, with over 6,000
-            species, ranging across all continents except Antarctica
           </Typography>
         </CardContent>
       </CardActionArea>
@@ -40,4 +33,4 @@ const Details: FC = () => {
   );
 };
 
-export default Details;
+export default ArtworkTile;
