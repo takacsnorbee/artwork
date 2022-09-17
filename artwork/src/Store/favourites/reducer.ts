@@ -1,7 +1,7 @@
 import { favouriteActionType } from './actions';
 import { ADD_FAVOURITE, REMOVE_FAVOURITE } from './types';
 
-const initialFavouriteState = [0];
+const initialFavouriteState: number[] = [];
 
 export const favouriteReducer = (
   state = initialFavouriteState,

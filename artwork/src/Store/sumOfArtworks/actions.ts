@@ -1,11 +1,13 @@
 import { GET_SUM_OF_ARTWORKS } from './types';
 
-export interface getSumOfArtworksI {
+export interface getSumOfArtworksType {
   type: typeof GET_SUM_OF_ARTWORKS;
-  payload: number; // fixme any
+  payload: number;
 }
 
-export const getSumOfArtworksAction = (payload: number): getSumOfArtworksI => ({
+export const getSumOfArtworksAction = (
+  payload: number
+): getSumOfArtworksType => ({
   type: GET_SUM_OF_ARTWORKS,
   payload,
 });
