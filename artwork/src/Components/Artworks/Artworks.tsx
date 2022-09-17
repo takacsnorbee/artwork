@@ -1,16 +1,25 @@
 import './Artworks.css';
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import ElementNumSelect from '../../Common/ElementNumSelect/ElementNumSelect';
 import { SelectChangeEvent } from '@mui/material/Select';
 import Pagination from '@mui/material/Pagination';
 import ArtworkTile from '../../Common/ArtworkTile/ArtworkTile';
+import { fetchSumOfArtworks } from '../../Store/sumOfArtworks/thunk';
+import { useAppDispatch } from '../../hooks';
 
 const Artworks: FC = () => {
+  const dispatch = useAppDispatch();
   const [artworkPerPage, setArtworkPerPage] = useState('25');
   const [searchArtworkValue, setSearchArtworkValue] = useState('');
   const [chosenPage, setChosenPage] = useState(1);
+  const [sumPage, setSumPage] = useState(0);
+
+  useEffect(() => {
+    console.log('useEffect');
+    dispatch(fetchSumOfArtworks());
+  }, []);
 
   const handleSearchBtn = (): void => {
     console.log('clicked');
