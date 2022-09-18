@@ -73,14 +73,6 @@ const Artworks: FC = () => {
         shape='rounded'
       />
       ---------------------------
-      {/* {artworks.map((artwork) => (
-        <ArtworkTile
-          key={artwork.id}
-          artworkID={artwork.id}
-          imgID={artwork.image_id}
-          title={artwork.title}
-        />
-      ))} */}
       {artworks.map((artwork: any) => (
         <ArtworkTile
           key={artwork.id}

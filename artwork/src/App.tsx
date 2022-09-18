@@ -15,7 +15,7 @@ const App: FC = () => {
           <Route path='*' element={<Artworks />} />
           <Route path='/' element={<Artworks />} />
           <Route path='artwork' element={<Artworks />} />
-          <Route path='details/:id' element={<Details />} />
+          <Route path='details/:artworkID/:imgID' element={<Details />} />
           <Route path='favourites' element={<Favourites />} />
         </Routes>
       </BrowserRouter>

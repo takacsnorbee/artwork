@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import './ArtworkTile.css';
 import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
@@ -18,25 +18,24 @@ interface PropsI {
 const ArtworkTile = ({ artworkID, imgID, title }: PropsI): JSX.Element => {
   const navigate = useNavigate();
 
-  useEffect(() => {
-    console.log(imgID);
-  }, [imgID]);
-
-  const handleClickOnCard = (id: number): void => {
-    navigate(`/details/${id}`);
+  const handleClickOnCard = (
+    tempArtworkID: number,
+    tempImgID: number
+  ): void => {
+    navigate(`/details/${tempArtworkID}/${tempImgID}`);
   };
 
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardActionArea
         onClick={() => {
-          handleClickOnCard(artworkID);
+          handleClickOnCard(artworkID, imgID);
         }}
       >
         <CardMedia
           component='img'
           height='140'
-          image='/static/images/cards/contemplative-reptile.jpg'
+          image={`https://www.artic.edu/iiif/2/${imgID}/full/843,/0/default.jpg`}
           alt='green iguana'
         />
         <CardContent>
