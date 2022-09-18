@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { useEffect } from 'react';
 import './ArtworkTile.css';
 import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
@@ -7,11 +7,32 @@ import CardActionArea from '@mui/material/CardActionArea';
 import Card from '@mui/material/Card';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
+import { useNavigate } from 'react-router-dom';
 
-const ArtworkTile: FC = () => {
+interface PropsI {
+  artworkID: number;
+  imgID: number;
+  title: string;
+}
+
+const ArtworkTile = ({ artworkID, imgID, title }: PropsI): JSX.Element => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    console.log(imgID);
+  }, [imgID]);
+
+  const handleClickOnCard = (id: number): void => {
+    navigate(`/details/${id}`);
+  };
+
   return (
     <Card sx={{ maxWidth: 345 }}>
-      <CardActionArea>
+      <CardActionArea
+        onClick={() => {
+          handleClickOnCard(artworkID);
+        }}
+      >
         <CardMedia
           component='img'
           height='140'
@@ -20,7 +41,7 @@ const ArtworkTile: FC = () => {
         />
         <CardContent>
           <Typography gutterBottom variant='h5' component='div'>
-            Lizard
+            {title}
           </Typography>
         </CardContent>
       </CardActionArea>

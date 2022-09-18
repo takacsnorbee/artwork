@@ -1,15 +1,15 @@
 import { GET_SUM_OF_ARTWORKS } from './types';
-import { getSumOfArtworksType } from './actions';
+import { SumOfArtworksActionI } from './actions';
 
 const initialSumOfArtworks = 0;
 
 export const sumOfArtworksReducer = (
   state = initialSumOfArtworks,
-  actions: getSumOfArtworksType
+  action: SumOfArtworksActionI
 ): number => {
-  switch (actions.type) {
+  switch (action.type) {
     case GET_SUM_OF_ARTWORKS:
-      return state;
+      return action.payload;
     default:
       return state;
   }

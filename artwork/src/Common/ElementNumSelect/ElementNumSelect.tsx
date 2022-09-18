@@ -6,7 +6,7 @@ import MenuItem from '@mui/material/MenuItem';
 
 interface PropsI {
   handleSelect: (event: SelectChangeEvent) => void; // fixme
-  resultPerPage: string;
+  resultPerPage: number;
   selectLabel: string;
 }
 
@@ -21,7 +21,7 @@ const ElementNumSelect = ({
       <Select
         labelId='demo-simple-select-label'
         id='demo-simple-select'
-        value={resultPerPage}
+        value={`${resultPerPage}`}
         label={selectLabel}
         onChange={handleSelect}
       >

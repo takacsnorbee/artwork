@@ -5,9 +5,9 @@ const initialLoaderState = false;
 
 export const loaderReducer = (
   state = initialLoaderState,
-  actions: loaderActionType
+  action: loaderActionType
 ): boolean => {
-  switch (actions.type) {
+  switch (action.type) {
     case START_LOADER:
       return true;
     case STOP_LOADER:

@@ -6,19 +6,23 @@ import ElementNumSelect from '../../Common/ElementNumSelect/ElementNumSelect';
 import { SelectChangeEvent } from '@mui/material/Select';
 import Pagination from '@mui/material/Pagination';
 import ArtworkTile from '../../Common/ArtworkTile/ArtworkTile';
-import { fetchSumOfArtworks } from '../../Store/sumOfArtworks/thunk';
 import { useAppDispatch } from '../../hooks';
+import { useSelector } from 'react-redux';
+import { getArtworkList, getTotalPages } from '../../Store/selectors';
+import { fetchArtworkList } from '../../Store/artworkList/thunk';
+import { ArtworkListI } from '../../Store/artworkList/reducer';
 
 const Artworks: FC = () => {
   const dispatch = useAppDispatch();
-  const [artworkPerPage, setArtworkPerPage] = useState('25');
+  const totalPages = useSelector(getTotalPages);
+  const artworks = useSelector(getArtworkList);
+  const [artworkPerPage, setArtworkPerPage] = useState(25);
   const [searchArtworkValue, setSearchArtworkValue] = useState('');
-  const [chosenPage, setChosenPage] = useState(1);
-  const [sumPage, setSumPage] = useState(0);
+  // const [chosenPage, setChosenPage] = useState(1);
 
+  console.log(artworks);
   useEffect(() => {
-    console.log('useEffect');
-    dispatch(fetchSumOfArtworks());
+    void dispatch(fetchArtworkList(artworkPerPage));
   }, []);
 
   const handleSearchBtn = (): void => {
@@ -26,7 +30,8 @@ const Artworks: FC = () => {
   };
 
   const handleElementNumSelect = (event: SelectChangeEvent): void => {
-    setArtworkPerPage(event.target.value);
+    setArtworkPerPage(+event.target.value);
+    void dispatch(fetchArtworkList(+event.target.value));
   };
 
   const handleSearchInput = (
@@ -39,7 +44,8 @@ const Artworks: FC = () => {
     event: React.ChangeEvent<unknown>,
     value: number
   ): void => {
-    setChosenPage(value);
+    // setChosenPage(value);
+    // void dispatch()
   };
 
   const handleClickOnTile = (): void => {
@@ -62,15 +68,27 @@ const Artworks: FC = () => {
         selectLabel='Artwork per page'
       />
       <Pagination
-        count={30}
+        count={totalPages}
         onChange={handlePaginationChange}
         shape='rounded'
       />
       ---------------------------
-      <ArtworkTile />
-      <ArtworkTile />
-      <ArtworkTile />
-      <ArtworkTile />
+      {/* {artworks.map((artwork) => (
+        <ArtworkTile
+          key={artwork.id}
+          artworkID={artwork.id}
+          imgID={artwork.image_id}
+          title={artwork.title}
+        />
+      ))} */}
+      {artworks.map((artwork: any) => (
+        <ArtworkTile
+          key={artwork.id}
+          artworkID={artwork.id}
+          imgID={artwork.image_id}
+          title={artwork.title}
+        />
+      ))}
     </>
   );
 };

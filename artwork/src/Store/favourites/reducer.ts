@@ -5,13 +5,13 @@ const initialFavouriteState: number[] = [];
 
 export const favouriteReducer = (
   state = initialFavouriteState,
-  actions: favouriteActionType
+  action: favouriteActionType
 ): typeof initialFavouriteState => {
-  switch (actions.type) {
+  switch (action.type) {
     case ADD_FAVOURITE:
-      return [...state, actions.payload];
+      return [...state, action.payload];
     case REMOVE_FAVOURITE:
-      return state.filter((id) => id !== actions.payload);
+      return state.filter((id) => id !== action.payload);
     default:
       return state;
   }

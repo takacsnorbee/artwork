@@ -4,7 +4,7 @@ import rootReducer from './rootReducer';
 
 export const store = configureStore({
   reducer: rootReducer,
-  middleware: [thunk],
+  // middleware: [thunk],
 });
 
 export type RootState = ReturnType<typeof store.getState>;

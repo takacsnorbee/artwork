@@ -4,7 +4,7 @@
         "es2021": true
     },
     "extends": [
-        "plugin:@typescript-eslint/recommended-requiring-type-checking",
+        // "plugin:@typescript-eslint/recommended-requiring-type-checking",
         "plugin:react/recommended",
         "standard-with-typescript",
         "react-app",
