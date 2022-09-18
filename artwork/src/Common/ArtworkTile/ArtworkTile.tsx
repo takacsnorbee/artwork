@@ -36,7 +36,7 @@ const ArtworkTile = ({ artworkID, imgID, title }: PropsI): JSX.Element => {
           component='img'
           height='140'
           image={`https://www.artic.edu/iiif/2/${imgID}/full/843,/0/default.jpg`}
-          alt='green iguana'
+          alt={title}
         />
         <CardContent>
           <Typography gutterBottom variant='h5' component='div'>

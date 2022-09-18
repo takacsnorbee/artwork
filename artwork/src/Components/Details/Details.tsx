@@ -7,19 +7,34 @@ import CardActionArea from '@mui/material/CardActionArea';
 import Card from '@mui/material/Card';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
+import { useAppDispatch } from '../../hooks';
+import { fetchArtworkDetails } from '../../Store/artwork/thunk';
+import { useSelector } from 'react-redux';
+import { getArtworkDetails } from '../../Store/selectors';
 
 const Details: FC = () => {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const { artworkID, imgID } = useParams();
+  const artworkData = useSelector(getArtworkDetails);
 
   useEffect((): void => {
-    console.log(artworkID);
-    console.log(imgID);
+    if (typeof artworkID !== 'undefined') {
+      void dispatch(fetchArtworkDetails(+artworkID));
+    }
   }, [artworkID, imgID]);
 
+  const handleBackBtn = (): void => {
+    navigate('/artwork');
+  };
+
   return (
-    <Card sx={{ maxWidth: 345 }}>
-      <CardActionArea>
+    <>
+      <Button variant='contained' onClick={handleBackBtn}>
+        Back
+      </Button>
+      <Card sx={{ maxWidth: 345 }}>
         <CardMedia
           component='img'
           height='140'
@@ -28,27 +43,29 @@ const Details: FC = () => {
               ? `https://www.artic.edu/iiif/2/${imgID}/full/843,/0/default.jpg`
               : ``
           }
-          alt='green iguana'
+          alt={artworkData.title}
         />
         <CardContent>
           <Typography sx={{ fontSize: 14 }} color='text.secondary' gutterBottom>
-            Word of the Day
+            {artworkData.artist_title}
           </Typography>
           <Typography gutterBottom variant='h5' component='div'>
-            Lizard
+            {artworkData.title}
           </Typography>
           <Typography variant='body2' color='text.secondary'>
-            Lizards are a widespread group of squamate reptiles, with over 6,000
-            species, ranging across all continents except Antarctica
+            {artworkData.publication_history}
+          </Typography>
+          <Typography sx={{ fontSize: 14 }} color='text.secondary' gutterBottom>
+            {artworkData.date_display}
           </Typography>
         </CardContent>
-      </CardActionArea>
-      <CardActions>
-        <Button size='small' color='primary'>
-          Set favourit icon
-        </Button>
-      </CardActions>
-    </Card>
+        <CardActions>
+          <Button size='small' color='primary'>
+            Set favourit icon
+          </Button>
+        </CardActions>
+      </Card>
+    </>
   );
 };
 

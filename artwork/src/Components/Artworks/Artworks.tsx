@@ -18,11 +18,9 @@ const Artworks: FC = () => {
   const artworks = useSelector(getArtworkList);
   const [artworkPerPage, setArtworkPerPage] = useState(25);
   const [searchArtworkValue, setSearchArtworkValue] = useState('');
-  // const [chosenPage, setChosenPage] = useState(1);
 
-  console.log(artworks);
   useEffect(() => {
-    void dispatch(fetchArtworkList(artworkPerPage));
+    void dispatch(fetchArtworkList(1, artworkPerPage));
   }, []);
 
   const handleSearchBtn = (): void => {
@@ -31,7 +29,7 @@ const Artworks: FC = () => {
 
   const handleElementNumSelect = (event: SelectChangeEvent): void => {
     setArtworkPerPage(+event.target.value);
-    void dispatch(fetchArtworkList(+event.target.value));
+    void dispatch(fetchArtworkList(1, +event.target.value));
   };
 
   const handleSearchInput = (
@@ -44,8 +42,7 @@ const Artworks: FC = () => {
     event: React.ChangeEvent<unknown>,
     value: number
   ): void => {
-    // setChosenPage(value);
-    // void dispatch()
+    void dispatch(fetchArtworkList(value, artworkPerPage));
   };
 
   const handleClickOnTile = (): void => {

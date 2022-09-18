@@ -4,10 +4,11 @@ import { startLoaderAction, stopLoaderAction } from '../loader/actions';
 import { getArtworkListAction } from './actions';
 
 export const fetchArtworkList =
-  (itemPerPage: number) => async (dispatch: Dispatch<AnyAction>) => {
+  (actualPage: number, itemPerPage: number) =>
+  async (dispatch: Dispatch<AnyAction>) => {
     dispatch(startLoaderAction());
     const result = await fetch(
-      `https://api.artic.edu/api/v1/artworks?page=1&limit=${itemPerPage}`
+      `https://api.artic.edu/api/v1/artworks?page=${actualPage}&limit=${itemPerPage}`
     )
       .then((res) => res.json())
       .catch((error) => {
