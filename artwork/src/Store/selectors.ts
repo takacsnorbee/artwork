@@ -2,6 +2,7 @@ import { RootState } from '.';
 
 export const getLoaderState = (state: RootState): boolean => state.loader;
 export const getFavourites = (state: RootState): number[] => state.favourites;
+export const getFavouriteList = (state: RootState): any => state.favouriteList;
 export const getArtworkDetails = (state: RootState): any =>
   state.artworkDetails;
 export const getTotalPages = (state: RootState): number =>

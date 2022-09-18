@@ -8,21 +8,41 @@ import Card from '@mui/material/Card';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
+import { useAppDispatch } from '../../hooks';
+import {
+  removeFavouriteAction,
+  addFavouriteAction,
+} from '../../Store/favourites/actions';
 
 interface PropsI {
   artworkID: number;
   imgID: number;
   title: string;
+  favourite: boolean;
 }
 
-const ArtworkTile = ({ artworkID, imgID, title }: PropsI): JSX.Element => {
+const ArtworkTile = ({
+  artworkID,
+  imgID,
+  title,
+  favourite,
+}: PropsI): JSX.Element => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const handleClickOnCard = (
     tempArtworkID: number,
     tempImgID: number
   ): void => {
     navigate(`/details/${tempArtworkID}/${tempImgID}`);
+  };
+
+  const handleFavouriteBtn = (): void => {
+    if (favourite) {
+      void dispatch(removeFavouriteAction(artworkID));
+    } else {
+      void dispatch(addFavouriteAction(artworkID));
+    }
   };
 
   return (
@@ -45,8 +65,8 @@ const ArtworkTile = ({ artworkID, imgID, title }: PropsI): JSX.Element => {
         </CardContent>
       </CardActionArea>
       <CardActions>
-        <Button size='small' color='primary'>
-          Set favourit icon
+        <Button size='small' color='primary' onClick={handleFavouriteBtn}>
+          {favourite ? 'DEL favourite' : 'ADD favourite'}
         </Button>
       </CardActions>
     </Card>

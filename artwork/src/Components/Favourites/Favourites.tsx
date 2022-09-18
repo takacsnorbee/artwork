@@ -1,31 +1,52 @@
 import './Favourites.css';
-import React, { FC } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import List from '@mui/material/List';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemText from '@mui/material/ListItemText';
-import ListItem from '@mui/material/ListItem';
+import { useSelector } from 'react-redux';
+import { getFavourites } from '../../Store/selectors';
+import { fetchArtworksService } from '../../helper/service';
+import { FavouritesTile } from '../../Common/FavouritesTile/FavouritesTile';
+import { useAppDispatch } from '../../hooks';
+import {
+  startLoaderAction,
+  stopLoaderAction,
+} from '../../Store/loader/actions';
 import Button from '@mui/material/Button';
+import { useNavigate } from 'react-router-dom';
 
 const Favourites: FC = () => {
-  const deleteFromFavouriteList = (): void => {
-    console.log('REmove');
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const favourites = useSelector(getFavourites);
+  const [favouriteArtworks, setFavouriteArtworks]: any = useState([]);
+
+  const fetchArtwork = async (IDs: any): Promise<any> => {
+    dispatch(startLoaderAction());
+    for (const id of IDs) {
+      const data = await fetchArtworksService(+id);
+      setFavouriteArtworks((prev: any[]) => [...prev, data.data]);
+    }
+    dispatch(stopLoaderAction());
   };
 
-  const goToDetails = (): void => {
-    console.log('go to details');
+  useEffect((): void => {
+    void fetchArtwork(favourites);
+  }, []);
+
+  const handleRedirectToHome = (): void => {
+    navigate('/artwork');
   };
 
   return (
-    <List>
-      <ListItem>
-        <ListItemButton onClick={goToDetails}>
-          <ListItemText primary='Trash' />
-        </ListItemButton>
-        <Button size='small' color='primary' onClick={deleteFromFavouriteList}>
-          Set favourit icon
-        </Button>
-      </ListItem>
-    </List>
+    <>
+      <Button variant='contained' onClick={handleRedirectToHome}>
+        Back
+      </Button>
+      <List>
+        {favouriteArtworks.map((artwork: any) => {
+          return <FavouritesTile key={artwork.id} artworkData={artwork} />;
+        })}
+      </List>
+    </>
   );
 };
 

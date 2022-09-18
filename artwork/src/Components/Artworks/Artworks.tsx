@@ -8,13 +8,20 @@ import Pagination from '@mui/material/Pagination';
 import ArtworkTile from '../../Common/ArtworkTile/ArtworkTile';
 import { useAppDispatch } from '../../hooks';
 import { useSelector } from 'react-redux';
-import { getArtworkList, getTotalPages } from '../../Store/selectors';
+import {
+  getArtworkList,
+  getFavourites,
+  getTotalPages,
+} from '../../Store/selectors';
 import { fetchArtworkList } from '../../Store/artworkList/thunk';
 import { ArtworkListI } from '../../Store/artworkList/reducer';
+import { useNavigate } from 'react-router-dom';
 
 const Artworks: FC = () => {
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const totalPages = useSelector(getTotalPages);
+  const favourites = useSelector(getFavourites);
   const artworks = useSelector(getArtworkList);
   const [artworkPerPage, setArtworkPerPage] = useState(25);
   const [searchArtworkValue, setSearchArtworkValue] = useState('');
@@ -49,6 +56,10 @@ const Artworks: FC = () => {
     console.log('list element');
   };
 
+  const handleRedirectToFavourites = (): void => {
+    navigate('/favourites');
+  };
+
   return (
     <>
       <TextField
@@ -58,6 +69,9 @@ const Artworks: FC = () => {
       />
       <Button variant='contained' onClick={handleSearchBtn}>
         Search
+      </Button>
+      <Button variant='contained' onClick={handleRedirectToFavourites}>
+        Go to favourites
       </Button>
       <ElementNumSelect
         handleSelect={handleElementNumSelect}
@@ -76,6 +90,7 @@ const Artworks: FC = () => {
           artworkID={artwork.id}
           imgID={artwork.image_id}
           title={artwork.title}
+          favourite={favourites.includes(artwork.id)}
         />
       ))}
     </>
