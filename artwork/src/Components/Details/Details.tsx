@@ -3,12 +3,10 @@ import './Details.css';
 import React, { FC, useEffect } from 'react';
 import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
-import CardActions from '@mui/material/CardActions';
 import CardActionArea from '@mui/material/CardActionArea';
 import Card from '@mui/material/Card';
 import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useAppDispatch } from '../../hooks';
 import { fetchArtworkDetails } from '../../Store/artwork/thunk';
 import { useSelector } from 'react-redux';
@@ -19,10 +17,10 @@ import {
 } from '../../Store/favourites/actions';
 import StarBorderPurple500SharpIcon from '@mui/icons-material/StarBorderPurple500Sharp';
 import StarPurple500SharpIcon from '@mui/icons-material/StarPurple500Sharp';
+import { DetailsNavBtns } from './DetailsNavBtns/DetailsNavBtns';
 
 const Details: FC = () => {
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
   const favourites = useSelector(getFavourites);
   const { artworkID, imgID } = useParams();
   const artworkData = useSelector(getArtworkDetails);
@@ -31,11 +29,8 @@ const Details: FC = () => {
     if (typeof artworkID !== 'undefined') {
       void dispatch(fetchArtworkDetails(+artworkID));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [artworkID, imgID]);
-
-  const handleBackBtn = (site: string): void => {
-    navigate(site === 'home' ? '/artwork' : '/favourites');
-  };
 
   const handleFavouriteBtn = (): void => {
     if (favourites.includes(+artworkID!)) {
@@ -47,14 +42,7 @@ const Details: FC = () => {
 
   return (
     <section className='details-wrapper'>
-      <div className='details-btn-wrapper'>
-        <Button variant='contained' onClick={() => handleBackBtn('home')}>
-          Back
-        </Button>
-        <Button variant='contained' onClick={() => handleBackBtn('favourite')}>
-          Favoirutes
-        </Button>
-      </div>
+      <DetailsNavBtns />
       <Card sx={{ maxWidth: 345 }}>
         <CardMedia
           component='img'

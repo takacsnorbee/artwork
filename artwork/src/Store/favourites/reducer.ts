@@ -9,10 +9,10 @@ export const favouriteReducer = (
 ): typeof initialFavouriteState => {
   switch (action.type) {
     case ADD_FAVOURITE:
-      if (!state.includes(action.payload)) {
-        return [...state, action.payload];
-      } else {
+      if (state.includes(action.payload)) {
         return state;
+      } else {
+        return [...state, action.payload];
       }
     case REMOVE_FAVOURITE:
       return state.filter((id) => id !== action.payload);

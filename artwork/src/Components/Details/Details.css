@@ -1,6 +1,7 @@
 .details-btn-wrapper {
     display: flex;
     justify-content: space-between;
+    padding: 0 5px;
 }
 
 .details-star-action-area {

@@ -6,8 +6,6 @@ import Favourites from './Components/Favourites/Favourites';
 import Details from './Components/Details/Details';
 import Loader from './Common/Loader/Loader';
 
-
-
 const App: FC = () => {
   return (
     <>

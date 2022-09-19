@@ -1,7 +1,9 @@
 import './Favourites.css';
 import React, { FC, useEffect, useState } from 'react';
 import List from '@mui/material/List';
+import Button from '@mui/material/Button';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { getFavourites } from '../../Store/selectors';
 import { fetchArtworksService } from '../../helper/service';
 import { FavouritesTile } from '../../Common/FavouritesTile/FavouritesTile';
@@ -10,8 +12,6 @@ import {
   startLoaderAction,
   stopLoaderAction,
 } from '../../Store/loader/actions';
-import Button from '@mui/material/Button';
-import { useNavigate } from 'react-router-dom';
 
 const Favourites: FC = () => {
   const navigate = useNavigate();
@@ -19,7 +19,8 @@ const Favourites: FC = () => {
   const favourites = useSelector(getFavourites);
   const [favouriteArtworks, setFavouriteArtworks]: any = useState([]);
 
-  const fetchArtwork = async (IDs: any): Promise<any> => {
+  const fetchArtwork = async (IDs: number[]): Promise<any> => {
+    // FIXME
     dispatch(startLoaderAction());
     for (const id of IDs) {
       const data = await fetchArtworksService(+id);
@@ -30,16 +31,13 @@ const Favourites: FC = () => {
 
   useEffect((): void => {
     void fetchArtwork(favourites);
-  }, []);
-
-  const handleRedirectToHome = (): void => {
-    navigate('/artwork');
-  };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [favourites]);
 
   return (
     <>
       <div className='favourite-btn-wrapper'>
-        <Button variant='contained' onClick={handleRedirectToHome}>
+        <Button variant='contained' onClick={() => navigate('/artwork')}>
           Home
         </Button>
       </div>

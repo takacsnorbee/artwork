@@ -5,7 +5,7 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 
 interface PropsI {
-  handleSelect: (event: SelectChangeEvent) => void; // fixme
+  handleSelect: (event: SelectChangeEvent) => void;
   resultPerPage: number;
   selectLabel: string;
 }

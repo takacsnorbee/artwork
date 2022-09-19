@@ -1,20 +1,19 @@
 import React from 'react';
 import './ArtworkTile.css';
+import StarBorderPurple500SharpIcon from '@mui/icons-material/StarBorderPurple500Sharp';
+import StarPurple500SharpIcon from '@mui/icons-material/StarPurple500Sharp';
 import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 import CardActionArea from '@mui/material/CardActionArea';
 import Card from '@mui/material/Card';
 import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../hooks';
 import {
   removeFavouriteAction,
   addFavouriteAction,
 } from '../../Store/favourites/actions';
-import StarBorderPurple500SharpIcon from '@mui/icons-material/StarBorderPurple500Sharp';
-import StarPurple500SharpIcon from '@mui/icons-material/StarPurple500Sharp';
 
 interface PropsI {
   artworkID: number;
@@ -32,13 +31,6 @@ const ArtworkTile = ({
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  const handleClickOnCard = (
-    tempArtworkID: number,
-    tempImgID: number
-  ): void => {
-    navigate(`/details/${tempArtworkID}/${tempImgID}`);
-  };
-
   const handleFavouriteBtn = (): void => {
     if (favourite) {
       void dispatch(removeFavouriteAction(artworkID));
@@ -51,7 +43,7 @@ const ArtworkTile = ({
     <Card sx={{ maxWidth: 345 }}>
       <CardActionArea
         onClick={() => {
-          handleClickOnCard(artworkID, imgID);
+          navigate(`/details/${artworkID}/${imgID}`);
         }}
       >
         <CardMedia

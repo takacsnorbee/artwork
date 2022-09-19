@@ -8,6 +8,7 @@ import Pagination from '@mui/material/Pagination';
 import ArtworkTile from '../../Common/ArtworkTile/ArtworkTile';
 import { useAppDispatch } from '../../hooks';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import {
   getArtworkList,
   getFavourites,
@@ -17,7 +18,6 @@ import {
   fetchArtworkList,
   fetchFilteredArtwokList,
 } from '../../Store/artworkList/thunk';
-import { useNavigate } from 'react-router-dom';
 
 const Artworks: FC = () => {
   const navigate = useNavigate();
@@ -31,6 +31,7 @@ const Artworks: FC = () => {
 
   useEffect(() => {
     void dispatch(fetchArtworkList(1, artworkPerPage));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleSearchInput = (
@@ -79,10 +80,6 @@ const Artworks: FC = () => {
       void dispatch(fetchArtworkList(value, artworkPerPage));
     }
   };
-
-  // const handleRedirectToFavourites = (): void => {
-  //   navigate('/favourites');
-  // };
 
   return (
     <div className='artwork-site-wrapper'>

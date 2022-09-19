@@ -20,7 +20,7 @@ const initialArtworkList: ArtworkListI = {
 export const artworksListReducer = (
   state = initialArtworkList,
   action: ArtworkListActionI
-): any => {
+): ArtworkListI => {
   switch (action.type) {
     case GET_ARTWORK_LIST:
       return action.payload;
