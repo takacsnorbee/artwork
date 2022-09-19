@@ -2,7 +2,7 @@ import { GET_ARTWORK_LIST } from './types';
 import { ArtworkListActionI } from './actions';
 
 export interface ArtworkListI {
-  artworks: [];
+  artworks: any[];
   currentPage: number;
   limit: number;
   total: number;

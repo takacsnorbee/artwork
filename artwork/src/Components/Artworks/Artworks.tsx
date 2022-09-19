@@ -13,7 +13,10 @@ import {
   getFavourites,
   getTotalPages,
 } from '../../Store/selectors';
-import { fetchArtworkList } from '../../Store/artworkList/thunk';
+import {
+  fetchArtworkList,
+  fetchFilteredArtwokList,
+} from '../../Store/artworkList/thunk';
 import { ArtworkListI } from '../../Store/artworkList/reducer';
 import { useNavigate } from 'react-router-dom';
 
@@ -23,6 +26,7 @@ const Artworks: FC = () => {
   const totalPages = useSelector(getTotalPages);
   const favourites = useSelector(getFavourites);
   const artworks = useSelector(getArtworkList);
+  const [pageNO, setPageNO] = useState(1);
   const [artworkPerPage, setArtworkPerPage] = useState(25);
   const [searchArtworkValue, setSearchArtworkValue] = useState('');
 
@@ -31,10 +35,14 @@ const Artworks: FC = () => {
   }, []);
 
   const handleSearchBtn = (): void => {
-    console.log('clicked');
+    setPageNO(1);
+    void dispatch(
+      fetchFilteredArtwokList(1, artworkPerPage, searchArtworkValue)
+    );
   };
 
   const handleElementNumSelect = (event: SelectChangeEvent): void => {
+    setPageNO(1);
     setArtworkPerPage(+event.target.value);
     void dispatch(fetchArtworkList(1, +event.target.value));
   };
@@ -49,12 +57,13 @@ const Artworks: FC = () => {
     event: React.ChangeEvent<unknown>,
     value: number
   ): void => {
+    setPageNO(value);
     void dispatch(fetchArtworkList(value, artworkPerPage));
   };
 
-  const handleClickOnTile = (): void => {
-    console.log('list element');
-  };
+  // const handleClickOnTile = (): void => {
+  //   console.log('list element');
+  // };
 
   const handleRedirectToFavourites = (): void => {
     navigate('/favourites');
@@ -82,6 +91,7 @@ const Artworks: FC = () => {
         count={totalPages}
         onChange={handlePaginationChange}
         shape='rounded'
+        page={pageNO}
       />
       ---------------------------
       {artworks.map((artwork: any) => (
