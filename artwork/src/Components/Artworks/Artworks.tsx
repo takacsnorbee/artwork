@@ -1,5 +1,5 @@
 import './Artworks.css';
-import React, { FC, KeyboardEventHandler, useEffect, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import ElementNumSelect from '../../Common/ElementNumSelect/ElementNumSelect';
@@ -33,26 +33,37 @@ const Artworks: FC = () => {
     void dispatch(fetchArtworkList(1, artworkPerPage));
   }, []);
 
+  const handleSearchInput = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ): void => {
+    setSearchArtworkValue(event.target.value);
+  };
+
   const handleSearchBtn = (): void => {
     if (searchArtworkValue.length > 3) {
       setPageNO(1);
       void dispatch(
         fetchFilteredArtwokList(1, artworkPerPage, searchArtworkValue)
       );
-      setSearchArtworkValue('');
     }
+  };
+
+  const handleResetBtn = (): void => {
+    setPageNO(1);
+    setSearchArtworkValue('');
+    void dispatch(fetchArtworkList(1, artworkPerPage));
   };
 
   const handleElementNumSelect = (event: SelectChangeEvent): void => {
     setPageNO(1);
     setArtworkPerPage(+event.target.value);
-    void dispatch(fetchArtworkList(1, +event.target.value));
-  };
-
-  const handleSearchInput = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ): void => {
-    setSearchArtworkValue(event.target.value);
+    if (searchArtworkValue !== '') {
+      void dispatch(
+        fetchFilteredArtwokList(1, artworkPerPage, searchArtworkValue)
+      );
+    } else {
+      void dispatch(fetchArtworkList(1, +event.target.value));
+    }
   };
 
   const handlePaginationChange = (
@@ -60,12 +71,18 @@ const Artworks: FC = () => {
     value: number
   ): void => {
     setPageNO(value);
-    void dispatch(fetchArtworkList(value, artworkPerPage));
+    if (searchArtworkValue !== '') {
+      void dispatch(
+        fetchFilteredArtwokList(value, artworkPerPage, searchArtworkValue)
+      );
+    } else {
+      void dispatch(fetchArtworkList(value, artworkPerPage));
+    }
   };
 
-  const handleRedirectToFavourites = (): void => {
-    navigate('/favourites');
-  };
+  // const handleRedirectToFavourites = (): void => {
+  //   navigate('/favourites');
+  // };
 
   return (
     <div className='artwork-site-wrapper'>
@@ -86,8 +103,11 @@ const Artworks: FC = () => {
           <Button variant='contained' onClick={handleSearchBtn}>
             Search
           </Button>
-          <Button variant='contained' onClick={handleRedirectToFavourites}>
-            Go to favourites
+          <Button variant='contained' onClick={handleResetBtn}>
+            Clear
+          </Button>
+          <Button variant='contained' onClick={() => navigate('/favourites')}>
+            FAV
           </Button>
         </div>
         <ElementNumSelect

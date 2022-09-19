@@ -32,7 +32,7 @@ export const fetchFilteredArtwokList =
     dispatch(startLoaderAction());
     const artworksCollector: any[] = [];
     const result = await fetch(
-      `https://api.artic.edu/api/v1/artworks/search?q=${query}/?page=${actualPage}&limit=${itemPerPage}`
+      `https://api.artic.edu/api/v1/artworks/search?q=${query}&page=${actualPage}&limit=${itemPerPage}`
     )
       .then((res) => res.json())
       .catch((error) => {
