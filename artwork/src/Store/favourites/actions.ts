@@ -12,6 +12,6 @@ export const addFavouriteAction = (payload: number): favouriteActionType => ({
 export const removeFavouriteAction = (
   payload: number
 ): favouriteActionType => ({
-  type: ADD_FAVOURITE,
+  type: REMOVE_FAVOURITE,
   payload,
 });

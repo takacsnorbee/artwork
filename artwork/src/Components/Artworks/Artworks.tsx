@@ -1,5 +1,5 @@
 import './Artworks.css';
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, KeyboardEventHandler, useEffect, useState } from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import ElementNumSelect from '../../Common/ElementNumSelect/ElementNumSelect';
@@ -17,7 +17,6 @@ import {
   fetchArtworkList,
   fetchFilteredArtwokList,
 } from '../../Store/artworkList/thunk';
-import { ArtworkListI } from '../../Store/artworkList/reducer';
 import { useNavigate } from 'react-router-dom';
 
 const Artworks: FC = () => {
@@ -35,10 +34,13 @@ const Artworks: FC = () => {
   }, []);
 
   const handleSearchBtn = (): void => {
-    setPageNO(1);
-    void dispatch(
-      fetchFilteredArtwokList(1, artworkPerPage, searchArtworkValue)
-    );
+    if (searchArtworkValue.length > 3) {
+      setPageNO(1);
+      void dispatch(
+        fetchFilteredArtwokList(1, artworkPerPage, searchArtworkValue)
+      );
+      setSearchArtworkValue('');
+    }
   };
 
   const handleElementNumSelect = (event: SelectChangeEvent): void => {
@@ -61,49 +63,59 @@ const Artworks: FC = () => {
     void dispatch(fetchArtworkList(value, artworkPerPage));
   };
 
-  // const handleClickOnTile = (): void => {
-  //   console.log('list element');
-  // };
-
   const handleRedirectToFavourites = (): void => {
     navigate('/favourites');
   };
 
   return (
-    <>
-      <TextField
-        label='Search Artwork'
-        variant='outlined'
-        onChange={handleSearchInput}
-      />
-      <Button variant='contained' onClick={handleSearchBtn}>
-        Search
-      </Button>
-      <Button variant='contained' onClick={handleRedirectToFavourites}>
-        Go to favourites
-      </Button>
-      <ElementNumSelect
-        handleSelect={handleElementNumSelect}
-        resultPerPage={artworkPerPage}
-        selectLabel='Artwork per page'
-      />
-      <Pagination
-        count={totalPages}
-        onChange={handlePaginationChange}
-        shape='rounded'
-        page={pageNO}
-      />
-      ---------------------------
-      {artworks.map((artwork: any) => (
-        <ArtworkTile
-          key={artwork.id}
-          artworkID={artwork.id}
-          imgID={artwork.image_id}
-          title={artwork.title}
-          favourite={favourites.includes(artwork.id)}
+    <div className='artwork-site-wrapper'>
+      <section>
+        <TextField
+          value={searchArtworkValue}
+          fullWidth
+          label='Search Artwork'
+          variant='outlined'
+          onChange={handleSearchInput}
+          onKeyDown={(data: any) => {
+            if (data.code === 'Enter') {
+              handleSearchBtn();
+            }
+          }}
         />
-      ))}
-    </>
+        <div className='artwork-site-btn-wrapper'>
+          <Button variant='contained' onClick={handleSearchBtn}>
+            Search
+          </Button>
+          <Button variant='contained' onClick={handleRedirectToFavourites}>
+            Go to favourites
+          </Button>
+        </div>
+        <ElementNumSelect
+          handleSelect={handleElementNumSelect}
+          resultPerPage={artworkPerPage}
+          selectLabel='Artwork per page'
+        />
+      </section>
+      <hr></hr>
+      <section>
+        <Pagination
+          count={totalPages}
+          onChange={handlePaginationChange}
+          shape='rounded'
+          page={pageNO}
+        />
+        <hr></hr>
+        {artworks.map((artwork: any) => (
+          <ArtworkTile
+            key={artwork.id}
+            artworkID={artwork.id}
+            imgID={artwork.image_id}
+            title={artwork.title}
+            favourite={favourites.includes(artwork.id)}
+          />
+        ))}
+      </section>
+    </div>
   );
 };
 

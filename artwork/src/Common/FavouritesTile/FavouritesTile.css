@@ -1,0 +1,17 @@
+.favourites-list-item {
+    align-items: stretch;
+}
+
+.favourites-list-item-btn {
+    border: 1px solid burlywood!important;
+}
+
+.favourites-list-item-del-icon {
+    font-size: 30px!important;
+    color: red;
+}
+
+.favourites-list-item-del-btn {
+    display: flex;
+    justify-content: center;
+}

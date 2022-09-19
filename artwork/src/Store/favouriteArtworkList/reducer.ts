@@ -1,10 +1,6 @@
 import { GET_FAVOURITE } from './types';
 import { favouriteArtworkListActionType } from './actions';
 
-// export interface favouriteArtworkListI {
-//   favourites: [];
-// }
-
 const initialFavouriteListState: any[] = [];
 
 export const favouriteListReducer = (
@@ -13,7 +9,6 @@ export const favouriteListReducer = (
 ): any[] => {
   switch (action.type) {
     case GET_FAVOURITE:
-      console.log(action.payload);
       return [...state, action.payload];
     default:
       return state;

@@ -6,6 +6,8 @@ import Button from '@mui/material/Button';
 import { useAppDispatch } from '../../hooks';
 import { removeFavouriteAction } from '../../Store/favourites/actions';
 import { useNavigate } from 'react-router-dom';
+import './FavouritesTile.css';
+import DeleteForeverSharpIcon from '@mui/icons-material/DeleteForeverSharp';
 
 interface Props {
   artworkData: any;
@@ -24,8 +26,9 @@ export const FavouritesTile = ({ artworkData }: Props): JSX.Element => {
   };
 
   return (
-    <ListItem>
+    <ListItem className='favourites-list-item'>
       <ListItemButton
+        className='favourites-list-item-btn'
         onClick={() => goToDetails(artworkData.id, artworkData.image_id)}
       >
         <ListItemText primary={artworkData.title} />
@@ -33,12 +36,14 @@ export const FavouritesTile = ({ artworkData }: Props): JSX.Element => {
         <ListItemText primary={artworkData.date_display} />
       </ListItemButton>
       <Button
+        className='favourites-list-item-del-btn'
         size='small'
         color='primary'
         onClick={() => deleteFromFavouriteList(artworkData.id)}
-      >
-        DEL favourite
-      </Button>
+        startIcon={
+          <DeleteForeverSharpIcon className='favourites-list-item-del-icon' />
+        }
+      ></Button>
     </ListItem>
   );
 };

@@ -14,7 +14,6 @@ export const fetchArtworkList =
       .catch((error) => {
         throw new Error(error);
       });
-    console.log(result);
     dispatch(
       getArtworkListAction({
         artworks: result.data,
@@ -39,9 +38,7 @@ export const fetchFilteredArtwokList =
       .catch((error) => {
         throw new Error(error);
       });
-    console.log(result);
     for (const obj of result.data) {
-      console.log(obj.api_link);
       artworksCollector.push(
         await fetch(obj.api_link).then((res) => res.json())
       );

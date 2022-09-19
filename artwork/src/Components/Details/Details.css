@@ -1,0 +1,8 @@
+.details-btn-wrapper {
+    display: flex;
+    justify-content: space-between;
+}
+
+.details-star-action-area {
+    padding: 10px!important;
+}

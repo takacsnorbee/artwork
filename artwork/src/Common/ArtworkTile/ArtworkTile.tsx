@@ -13,6 +13,8 @@ import {
   removeFavouriteAction,
   addFavouriteAction,
 } from '../../Store/favourites/actions';
+import StarBorderPurple500SharpIcon from '@mui/icons-material/StarBorderPurple500Sharp';
+import StarPurple500SharpIcon from '@mui/icons-material/StarPurple500Sharp';
 
 interface PropsI {
   artworkID: number;
@@ -65,9 +67,16 @@ const ArtworkTile = ({
         </CardContent>
       </CardActionArea>
       <CardActions>
-        <Button size='small' color='primary' onClick={handleFavouriteBtn}>
-          {favourite ? 'DEL favourite' : 'ADD favourite'}
-        </Button>
+        <CardActionArea
+          onClick={handleFavouriteBtn}
+          className='star-action-area'
+        >
+          {favourite ? (
+            <StarPurple500SharpIcon />
+          ) : (
+            <StarBorderPurple500SharpIcon />
+          )}
+        </CardActionArea>
       </CardActions>
     </Card>
   );

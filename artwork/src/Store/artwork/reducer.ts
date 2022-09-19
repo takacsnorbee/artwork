@@ -15,7 +15,6 @@ export const artworkDetailsReducer = (
 ): ArtworkDetailsI => {
   switch (action.type) {
     case GET_ARTWORK_DETAILS:
-      console.log(action.payload);
       return action.payload;
     default:
       return state;

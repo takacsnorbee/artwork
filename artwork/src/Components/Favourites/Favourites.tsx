@@ -38,9 +38,11 @@ const Favourites: FC = () => {
 
   return (
     <>
-      <Button variant='contained' onClick={handleRedirectToHome}>
-        Back
-      </Button>
+      <div className='favourite-btn-wrapper'>
+        <Button variant='contained' onClick={handleRedirectToHome}>
+          Home
+        </Button>
+      </div>
       <List>
         {favouriteArtworks.map((artwork: any) => {
           return <FavouritesTile key={artwork.id} artworkData={artwork} />;

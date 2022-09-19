@@ -1,0 +1,15 @@
+section {
+    max-width: 355px;
+    margin: 0 auto;
+    padding: 10px 0;
+}
+
+section > div {
+    margin: 20px auto;
+}
+
+.artwork-site-btn-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+}

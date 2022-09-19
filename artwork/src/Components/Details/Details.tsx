@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import './Details.css';
 import React, { FC, useEffect } from 'react';
 import CardMedia from '@mui/material/CardMedia';
@@ -11,11 +12,18 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../hooks';
 import { fetchArtworkDetails } from '../../Store/artwork/thunk';
 import { useSelector } from 'react-redux';
-import { getArtworkDetails } from '../../Store/selectors';
+import { getArtworkDetails, getFavourites } from '../../Store/selectors';
+import {
+  addFavouriteAction,
+  removeFavouriteAction,
+} from '../../Store/favourites/actions';
+import StarBorderPurple500SharpIcon from '@mui/icons-material/StarBorderPurple500Sharp';
+import StarPurple500SharpIcon from '@mui/icons-material/StarPurple500Sharp';
 
 const Details: FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const favourites = useSelector(getFavourites);
   const { artworkID, imgID } = useParams();
   const artworkData = useSelector(getArtworkDetails);
 
@@ -25,15 +33,28 @@ const Details: FC = () => {
     }
   }, [artworkID, imgID]);
 
-  const handleBackBtn = (): void => {
-    navigate('/artwork');
+  const handleBackBtn = (site: string): void => {
+    navigate(site === 'home' ? '/artwork' : '/favourites');
+  };
+
+  const handleFavouriteBtn = (): void => {
+    if (favourites.includes(+artworkID!)) {
+      void dispatch(removeFavouriteAction(+artworkID!));
+    } else {
+      void dispatch(addFavouriteAction(+artworkID!));
+    }
   };
 
   return (
-    <>
-      <Button variant='contained' onClick={handleBackBtn}>
-        Back
-      </Button>
+    <section className='details-wrapper'>
+      <div className='details-btn-wrapper'>
+        <Button variant='contained' onClick={() => handleBackBtn('home')}>
+          Back
+        </Button>
+        <Button variant='contained' onClick={() => handleBackBtn('favourite')}>
+          Favoirutes
+        </Button>
+      </div>
       <Card sx={{ maxWidth: 345 }}>
         <CardMedia
           component='img'
@@ -59,13 +80,18 @@ const Details: FC = () => {
             {artworkData.date_display}
           </Typography>
         </CardContent>
-        <CardActions>
-          <Button size='small' color='primary'>
-            Set favourit icon
-          </Button>
-        </CardActions>
+        <CardActionArea
+          onClick={handleFavouriteBtn}
+          className='star-action-area details-star-action-area'
+        >
+          {favourites.includes(+artworkID!) ? (
+            <StarPurple500SharpIcon />
+          ) : (
+            <StarBorderPurple500SharpIcon />
+          )}
+        </CardActionArea>
       </Card>
-    </>
+    </section>
   );
 };
 
