@@ -1,6 +1,7 @@
 # artwork
 
-live Demo: artwork-tn.netlify.app
+Live Demo: 
+https://artwork-tn.netlify.app
 
 - React
 - TypeScript
