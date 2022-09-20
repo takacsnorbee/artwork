@@ -4,22 +4,19 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import ListItem from '@mui/material/ListItem';
 import Button from '@mui/material/Button';
-import { useAppDispatch } from '../../hooks';
-import { removeFavouriteAction } from '../../Store/favourites/actions';
 import { useNavigate } from 'react-router-dom';
 import './FavouritesTile.css';
 
 interface Props {
   artworkData: any;
+  deleteFromFavouriteList: (artworkID: number) => void;
 }
 
-export const FavouritesTile = ({ artworkData }: Props): JSX.Element => {
+export const FavouritesTile = ({
+  artworkData,
+  deleteFromFavouriteList,
+}: Props): JSX.Element => {
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
-
-  const deleteFromFavouriteList = (artworkID: number): void => {
-    void dispatch(removeFavouriteAction(artworkID));
-  };
 
   return (
     <ListItem className='favourites-list-item'>

@@ -12,6 +12,7 @@ import {
   startLoaderAction,
   stopLoaderAction,
 } from '../../Store/loader/actions';
+import { removeFavouriteAction } from '../../Store/favourites/actions';
 
 const Favourites: FC = () => {
   const navigate = useNavigate();
@@ -20,7 +21,6 @@ const Favourites: FC = () => {
   const [favouriteArtworks, setFavouriteArtworks]: any = useState([]);
 
   const fetchArtwork = async (IDs: number[]): Promise<any> => {
-    // FIXME
     dispatch(startLoaderAction());
     for (const id of IDs) {
       const data = await fetchArtworksService(+id);
@@ -30,9 +30,20 @@ const Favourites: FC = () => {
   };
 
   useEffect((): void => {
-    void fetchArtwork(favourites);
+    if (favouriteArtworks.length === 0) {
+      void fetchArtwork(favourites);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [favourites]);
+  }, []);
+
+  const deleteFromFavouriteList = (artworkID: number): void => {
+    setFavouriteArtworks(
+      favouriteArtworks.filter((artwork: any) => {
+        return artwork.id !== artworkID;
+      })
+    );
+    void dispatch(removeFavouriteAction(artworkID));
+  };
 
   return (
     <>
@@ -43,7 +54,13 @@ const Favourites: FC = () => {
       </div>
       <List>
         {favouriteArtworks.map((artwork: any) => {
-          return <FavouritesTile key={artwork.id} artworkData={artwork} />;
+          return (
+            <FavouritesTile
+              key={artwork.id}
+              artworkData={artwork}
+              deleteFromFavouriteList={deleteFromFavouriteList}
+            />
+          );
         })}
       </List>
     </>
