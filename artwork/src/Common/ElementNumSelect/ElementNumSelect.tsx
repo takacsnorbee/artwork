@@ -19,6 +19,7 @@ const ElementNumSelect = ({
     <FormControl fullWidth>
       <InputLabel id='demo-simple-select-label'>{selectLabel}</InputLabel>
       <Select
+        data-testid='perPage'
         labelId='demo-simple-select-label'
         id='demo-simple-select'
         value={`${resultPerPage}`}

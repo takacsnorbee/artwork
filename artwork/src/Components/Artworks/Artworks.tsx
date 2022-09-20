@@ -97,7 +97,11 @@ const Artworks: FC = () => {
           }}
         />
         <div className='artwork-site-btn-wrapper'>
-          <Button variant='contained' onClick={handleSearchBtn}>
+          <Button
+            variant='contained'
+            onClick={handleSearchBtn}
+            data-testid='searchBtn'
+          >
             Search
           </Button>
           <Button variant='contained' onClick={handleResetBtn}>
